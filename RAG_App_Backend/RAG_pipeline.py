@@ -1,5 +1,4 @@
 from typing import List, TypedDict
-from langchain_chroma import Chroma
 from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
 from langgraph.graph import StateGraph, START
@@ -8,7 +7,7 @@ from langchain.chat_models import init_chat_model
 llm = init_chat_model("gemini-2.5-flash", model_provider="google_genai")
 
 template = """
-        You are a helpful assistant. Use the following pieces of context to answer the question at the end.
+            You are a helpful assistant. Use the following pieces of context to answer the question at the end.
             If you don't know the answer, just say that you don't know, don't try to make up an answer.
             Use five sentences maximum and keep the answer as concise as possible.
 
