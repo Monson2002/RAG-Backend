@@ -1,10 +1,8 @@
 import os
-import chromadb
 
 from openai import OpenAI
 from flask_cors import CORS
 from chroma import get_chroma_collection
-from RAG_pipeline import run_rag_pipeline
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
