@@ -6,7 +6,14 @@ from chroma import get_chroma_collection
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=["*"])
+
+@app.after_request
+def after_request(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+    response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+    return response
 
 client = OpenAI(
     api_key=os.getenv("GEMINI_API_KEY"),
@@ -36,8 +43,14 @@ collection = get_chroma_collection()
 
 # ("How does the process of excretion take place inside the human body. Explain")
 
-@app.route("/api/ask/", methods=["POST"])
+@app.route("/api/ask/", methods=["POST", "OPTIONS"])
 def ask():
+    if request.method == "OPTIONS":  # Preflight request
+        response = jsonify({})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+        return response, 200
     try: 
         data = request.get_json()  
         query = data.get("query", "")
