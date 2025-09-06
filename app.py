@@ -6,7 +6,7 @@ from chroma import get_chroma_collection
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["*"])
+CORS(app, origins=["https://ncert-rag.netlify.app", "http://localhost:5173"], supports_credentials=True)
 
 client = OpenAI(
     api_key=os.getenv("GEMINI_API_KEY"),
