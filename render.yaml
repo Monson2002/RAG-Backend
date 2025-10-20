@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: rag-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn src.server:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: VECTOR_STORE_DIR
+        value: /var/data/vector_store
+    healthCheckPath: /health
+    disk:
+      name: vector-store
+      mountPath: /var/data
+      sizeGB: 2
