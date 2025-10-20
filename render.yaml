@@ -13,4 +13,3 @@ services:
     disk:
       name: vector-store
       mountPath: /var/data
-      sizeGB: 2
